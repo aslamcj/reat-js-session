@@ -79,21 +79,21 @@ At the heart of all React appliactions are components. A component is a self con
 </body>
 </html>
 ```
+
 ### Example 3 how to link React Components
 
+````
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8" />
-	<title>Hello React!</title>
-	
+	<title>Hello React!</title>	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.min.js"></script> 
 	<script src="https://unpkg.com/babel-core@5.8.38/browser.min.js"></script>
 </head>
 <body>
 	<div id="app"></div>
-	
 	<script type="text/babel">
 		
 		/**
@@ -136,4 +136,5 @@ At the heart of all React appliactions are components. A component is a self con
 	</script>
 </body>
 </html>
+```
 
