@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<title>Hello React!</title>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.min.js"></script> 
+	<script src="https://unpkg.com/babel-core@5.8.38/browser.min.js"></script>
+	<style>
+		.demo {
+		  position: relative;
+		}
+		.demo .notificationsFrame {
+		  z-index: 2;
+		  width: 100%;
+		  top: 20px;
+		  background: #fff;
+		  border-radius: 3px;
+		  overflow: hidden;
+		  font-family: 'Open Sans', Helvetica, sans-serif;
+		  margin-bottom: 40px;
+		}
+		.demo .notificationsFrame.show-menu {
+		  transform: translate3d(150px, 0, 0);
+		}
+		.demo .notificationsFrame .searchInput {
+		  border: 10px solid red;
+		  box-sizing: border-box;
+		  position: absolute;
+		  top: 13px;
+		  right: 55px;
+		  width: 200px;
+		  height: 34px;
+		  border-radius: 17px;
+		  border: none;
+		  background: #fff;
+		  padding: 0 17px;
+		  font-size: 13px;
+		  color: #666;
+		  transition: all 0.3s ease-in-out;
+		  transform: translateX(15px);
+		  opacity: 0;
+		  pointer-events: none;
+		}
+		.demo .notificationsFrame .searchInput:focus {
+		  outline: none;
+		}
+		.demo .notificationsFrame .searchInput.active {
+		  -webkit-transform: translateX(0);
+		  transform: translateX(0);
+		  opacity: 1;
+		  pointer-events: all;
+		}
+		.demo .notificationsFrame .header {
+		  position: relative;
+		  height: 60px;
+		  background: #5f98cd;
+		  padding-top: 0;
+		}
+		.demo .notificationsFrame .header .menuIcon {
+		  position: absolute;
+		  width: 29px;
+		  height: 15px;
+		  top: 23px;
+		  left: 20px;
+		  cursor: pointer;
+		}
+		.demo .notificationsFrame .header .menuIcon:hover .dashTop, .demo .notificationsFrame .header .menuIcon:hover .dashBottom, .demo .notificationsFrame .header .menuIcon:hover .circle {
+		  background: #fff;
+		}
+		.demo .notificationsFrame .header .menuIcon .dashTop {
+		  position: absolute;
+		  width: 20px;
+		  height: 3px;
+		  top: 0;
+		  left: 0;
+		  background: #b2daff;
+		  border-radius: 3px;
+		  -webkit-transition: all 0.2s ease-in-out;
+		  transition: all 0.2s ease-in-out;
+		}
+		.demo .notificationsFrame .header .menuIcon .dashBottom {
+		  position: absolute;
+		  width: 20px;
+		  height: 3px;
+		  top: 0;
+		  left: 0;
+		  background: #b2daff;
+		  border-radius: 3px;
+		  -webkit-transition: all 0.2s ease-in-out;
+		  transition: all 0.2s ease-in-out;
+		  width: 29px;
+		  top: auto;
+		  bottom: 0;
+		}
+		.demo .notificationsFrame .header .menuIcon .circle {
+		  position: absolute;
+		  height: 7px;
+		  width: 7px;
+		  border-radius: 4px;
+		  top: -2px;
+		  right: 0;
+		  background: #b2daff;
+		  -webkit-transition: all 0.2s ease-in-out;
+		  transition: all 0.2s ease-in-out;
+		}
+		.demo .notificationsFrame .header .title {
+		  display: block;
+		  text-align: center;
+		  color: #fff;
+		  font-weight: 600;
+		  font-size: 15px;
+		}
+		.demo .notificationsFrame .header .searchIcon {
+		  position: absolute;
+		  z-index: 3;
+		  font-size: 21px;
+		  color: #fff;
+		  top: 18px;
+		  right: 20px;
+		  -webkit-transition: all 0.3s ease;
+		  transition: all 0.3s ease;
+		  cursor: pointer;
+		}
+		.demo .notificationsFrame .header .searchIcon:hover {
+		  color: #fff;
+		}
+		.demo .notificationsFrame .content {
+		  position: relative;
+		  height: 100%;
+		  overflow: hidden;
+		}
+		.demo .notificationsFrame .content .line {
+		  position: absolute;
+		  top: 0;
+		  left: 40px;
+		  bottom: 0;
+		  width: 3px;
+		  background: #ebebeb;
+		}
+		.demo .notificationsFrame .content .item {
+		  position: relative;
+		  z-index: 2;
+		  margin: 20px 30px 30px 70px;
+		  display: block;
+		  /*border-radius: 50%;
+		   border: 5px solid #ecf0f1;
+		   box-sizing: border-box;
+		   position: absolute;
+		   height: 20px;
+		   width: 20px;
+		   background: #fff;
+		   border: 2px solid #5F98CD;
+		   box-shadow: 0 0 0 3px #fff;*/
+		}
+		.demo .notificationsFrame .content .item:hover {
+		  color: #5f98cd;
+		  cursor: pointer;
+		}
+		.demo .notificationsFrame .content .item .circle {
+		  box-sizing: border-box;
+		  position: absolute;
+		  height: 11px;
+		  width: 11px;
+		  background: #fff;
+		  border: 2px solid #5f98cd;
+		  box-shadow: 0 0 0 3px #fff;
+		  border-radius: 6px;
+		  top: 0;
+		  left: -20px;
+		}
+		.demo .notificationsFrame .content .item .avatar {
+		  position: absolute;
+		  height: 40px;
+		  width: 40px;
+		  display: inline-block;
+		  vertical-align: top;
+		  overflow: hidden;
+		  left: -49px;
+		}
+		.demo .notificationsFrame .content .item .avatar img {
+		  width: 100%;
+		  -webkit-border-radius: 50%;
+		  -moz-border-radius: 50%;
+		  -ms-border-radius: 50%;
+		  -o-border-radius: 50%;
+		  border-radius: 50%;
+		  position: absolute;
+		  left: 0;
+		  top: 0;
+		}
+		.demo .notificationsFrame .content .item .time {
+		  display: block;
+		  font-size: 11px;
+		  line-height: 11px;
+		  margin-bottom: 2px;
+		}
+		.demo .notificationsFrame .content .item p {
+		  font-size: 15px;
+		  line-height: 20px;
+		  margin: 0px 40px 0px 0px;
+		  font-family: 'Open Sans', Lora, Times, no-serif;
+		}
+		.demo .notificationsFrame .content .item p b {
+		  font-weight: 600;
+		}
+		.demo .notificationsFrame .content .item .right {
+		  position: absolute;
+		  right: 5px;
+		  font-size: 11px;
+		  top: 11px;
+		}
+		.demo .notificationsFrame .content .item .commentCount {
+		  position: absolute;
+		  right: 15px;
+		  font-size: 12px;
+		  top: 11px;
+		}
+		.demo .notificationsFrame .content .item .commentCount:after {
+		  content: "\f075";
+		  font-family: FontAwesome;
+		  position: absolute;
+		  font-size: 20px;
+		  color: #ebebeb;
+		  top: -50%;
+		  left: 100%;
+		  margin-left: 10px;
+		  z-index: 3;
+		}
+		.demo .notificationsFrame .content .item .commentCount:hover:after {
+		  color: lightblue;
+		}
+		.demo .notificationsFrame .footer {
+		  position: relative;
+		  background: #fff;
+		  margin: auto;
+		  height: 30px;
+		  border-top: 1px solid #eee;
+		  width: 100%;
+		  border-radius: 10px;
+		}
+		.demo .notificationsFrame .footer button {
+		  background: #eee;
+		  position: absolute;
+		  width: 100%;
+		  right: 0px;
+		  left: 0px;
+		  top: 0px;
+		  bottom: 0px;
+		  border: 0;
+		}
+		.demo .notificationsFrame .footer button i {
+		  margin: 0 10px;
+		}
+	</style>
+</head>
+<body class="demo">
+	<div id="app"></div>
+	
+<script type="text/babel">
+
+class Timeline extends React.Component {
+	render() {
+		return (
+			<div className="notificationsFrame">
+			    <div className="panel">
+			        <div className="header">
+			            <div className="menuIcon">
+			                <div className="dashTop"></div>
+			                <div className="dashBottom"></div>
+			                <div className="circle"></div>
+			            </div>
+			            <span className="title">Timeline</span>
+			            <input type="text" className="searchInput" placeholder="Search ..." />
+			            <div className="fa fa-search searchIcon"></div>
+			        </div>
+			        <div className="content">
+			            <div className="line"></div>
+			            <div className="item">
+			                <div className="avatar">
+			                    <img alt='doug' src="http://www.croop.cl/UI/twitter/images/doug.jpg" />
+			                </div>
+			                <span className="time">An hour ago</span>
+			                <p>Ate lunch</p>
+			            </div>
+			            <div className="item">
+			                <div className="avatar">
+			                    <img alt='doug' src="http://www.croop.cl/UI/twitter/images/doug.jpg" />
+			                </div>
+			                <span className="time">10 am</span>
+			                <p>Read Day two article</p>
+			            </div>
+			            <div className="item">
+			                <div className="avatar">
+			                    <img alt='doug' src="http://www.croop.cl/UI/twitter/images/doug.jpg" />
+			                </div>
+			                <span className="time">10 am</span>
+			                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+			            </div>
+			            <div className="item">
+			                <div className="avatar">
+			                    <img alt='doug' src="http://www.croop.cl/UI/twitter/images/doug.jpg" />
+			                </div>
+			                <span className="time">2:21 pm</span>
+			                <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+		);
+	}
+}
+
+var mount =  document.getElementById('app');
+		ReactDOM.render(
+			<Timeline />, 
+			mount
+		);
+
+</script>
+
+	
+</body>
+</html>
