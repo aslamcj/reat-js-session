@@ -1,9 +1,9 @@
 ## Props and State Usage
 
 * Props:
-Can't be modified once defined
-These are imutable properties
+1.Can't be modified once defined
+2. These are imutable properties
 
 * State:
-Values to be monitored and needs be changes depends on event/action
-These are mutable properties
+1. Values to be monitored and needs be changes depends on event/action
+2. These are mutable properties
