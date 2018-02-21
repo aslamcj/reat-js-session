@@ -1,7 +1,7 @@
 ## Props and State Usage
 
 * Props:
-1.Can't be modified once defined
+1. Can't be modified once defined
 2. These are imutable properties
 
 * State:
