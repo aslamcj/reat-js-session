@@ -7,3 +7,5 @@
 * State:
 1. Values to be monitored and needs be changes depends on event/action
 2. These are mutable properties
+3. State can be created only through "class" components
+4. State can't be created through functional components which are state less
