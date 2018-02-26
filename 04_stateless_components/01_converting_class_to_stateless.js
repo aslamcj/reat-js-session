@@ -62,7 +62,7 @@ class TodoList extends React.Component {
 }
 
 
-// ** Define static methods 1
+// ** Define Stateless Functional Component methods 1
 const TodoItem = function(props){
   return (
     <li className={props.details.completed?'completed':''} 
